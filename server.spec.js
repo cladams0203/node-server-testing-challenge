@@ -7,8 +7,9 @@ beforeEach(() => db.seed.run())
 describe('users', () => {
     
     it('get /api/users', async () => {
-        const res = await request(server).get('/')
+        const res = await request(server).get('/api/users')
         expect(res.status).toBe(200)
+        
     })
 
     it('get /api/users', async () => {
@@ -27,7 +28,8 @@ describe('users', () => {
         const res = await request(server)
         .post('/api/users')
         .send({name: 'John', role: 'student'})
-        expect(res.body).toBe({message: 'added user successfully'})
+        console.log(res.body)
+        expect(res.body).toEqual({message: 'added user successfully'})
     })
 
     it('delete /api/users/1', async () => {
@@ -37,6 +39,6 @@ describe('users', () => {
 
     it('delete /api/users/1', async () => {
         const res = await request(server).delete('/api/users/1')
-        expect(res.body).toBe({message: 'user deleted successfully'})
+        expect(res.body).toEqual({message: 'user deleted successfully'})
     })
 })

@@ -1,0 +1,92 @@
+
+exports.up = function(knex) {
+  return knex.schema.createTable('users', tbl => {
+      tbl.increments()
+      tbl.string('name').notNullable()
+      tbl.string('role').notNullable()
+
+  })
+};
+
+exports.down = function(knex) {
+  knex.schema.dropTableIfExists('users')
+};
+
+---------
+exports.seed = function(knex) {
+  // Deletes ALL existing entries
+  return knex('users').truncate()
+    .then(function () {
+      // Inserts seed entries
+      return knex('users').insert([
+        {id: 1, name: 'Chris', role: 'student'},
+        {id: 2, name: 'Aaron', role: 'student'},
+        {id: 3, name: 'Stella', role: 'student'}
+      ]);
+    });
+};
+
+----
+
+// Update with your config settings.
+
+module.exports = {
+
+  development: {
+    client: 'sqlite3',
+    connection: {
+      filename: './data/users.db3'
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
+    }
+  },
+  testing: {
+    client: 'sqlite3',
+    connection: {
+      filename: './data/testing.db3'
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
+    }
+  },
+
+  staging: {
+    client: 'postgresql',
+    connection: {
+      database: 'my_db',
+      user:     'username',
+      password: 'password'
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    }
+  },
+
+  production: {
+    client: 'postgresql',
+    connection: {
+      database: 'my_db',
+      user:     'username',
+      password: 'password'
+    },
+    pool: {
+      min: 2,
+      max: 10
+    },
+    migrations: {
+      tableName: 'knex_migrations'
+    }
+  }
+
+};
