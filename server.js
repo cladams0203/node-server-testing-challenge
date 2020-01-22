@@ -1,5 +1,8 @@
-const server = require('express')
+const express = require('express')
+const server = express()
+const userRouter = require('./users/usersRouter')
 
-server.request(express.json())
+server.use(express.json())
+server.use('/api/users', userRouter)
 
 module.exports = server
